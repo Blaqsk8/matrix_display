@@ -1,4 +1,3 @@
-import adafruit_display_text.label
 import board
 import displayio
 import framebufferio
@@ -9,6 +8,12 @@ import terminalio
 import adafruit_ahtx0
 import adafruit_sgp30
 
+from adafruit_display_text.label import Label
+
+#---| User Config |-----------------------------
+#---| End User Config |-------------------------
+
+# Set up i2c bu
 i2c = busio.I2C(board.SCL, board.SDA, frequency=100000)
 
 # Release any other displays so we can create our own
@@ -30,8 +35,24 @@ sgp.set_iaq_baseline(0x8973, 0x8AAE)
 # Associate RGB matrix with a Display as to use displayio features
 display = framebufferio.FramebufferDisplay(matrix, auto_refresh=False)
 
-group = displayio.Group()
+# Create a display group for the text
+text_group = displayio.Group()
 
+# show text_group group
+display.show(text_group)
+
+# Create label for the text line 1
+label_line_1 = Label(terminalio.FONT, color=0xff0000)
+label_line_1.x = display.width
+label_line_1.y = 8
+text_group.append(label_line_1)
+
+
+# Create label for the text line 2
+label_line_2 = Label(terminalio.FONT, color=0xff0000)
+label_line_2.x = display.width
+label_line_2.y = 24
+text_group.append(label_line_2)
 
 
 # Start an infinite loop in order to get sensor data and display on matrix
