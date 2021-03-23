@@ -56,7 +56,7 @@ line_group.append(line3)
 display.show(line_group)
 
 # This function cycles through a list to show different words
-def change_text(line):
+def cycle_text():
     # Create a simple conditional loop for a binary choice between two settings
     for i in range(len(line_1_list)):
         if i == 0:
@@ -68,7 +68,7 @@ def change_text(line):
             line3.x = 7
         else:
             line1.color = 0xff0000
-            line1.x = 5
+            line1.x = 4
             line2.color = 0x7fff00
             line2.x = 6
             line3.color = 0x42a5f5
@@ -81,7 +81,12 @@ def change_text(line):
         line3.text = line_3_list[i]
         time.sleep(REFRESH_RATE)
 
+def scroll(line):
+    line.x = line.x - 1
+    line_width = line.bounding_box[2]
+    if line.x < -line_width:
+        line.x = display.width
+
 while True:
-    change_text(line1)
-    change_text(line2)
-    change_text(line3)
+    cycle_text()
+
