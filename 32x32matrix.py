@@ -26,7 +26,7 @@ matrix = rgbmatrix.RGBMatrix(
 # Associate the RGB matrix with a Display so that we can use displayio features
 display = framebufferio.FramebufferDisplay(matrix, auto_refresh=True)
 
-
+# Set the initial position and color for a blank 
 line1 = adafruit_display_text.label.Label(
     terminalio.FONT,
     color=0xff0000,
@@ -49,15 +49,15 @@ line3.x = 6
 line3.y = 25
 
 # Put each line of text into a Group, then show that group.
-g = displayio.Group()
-g.append(line1)
-g.append(line2)
-g.append(line3)
-display.show(g)
+line_group = displayio.Group()
+line_group.append(line1)
+line_group.append(line2)
+line_group.append(line3)
+display.show(line_group)
 
 # This function cycles through a list to show different words
 def change_text(line):
-    
+    # Create a simple conditional loop for a binary choice between two settings
     for i in range(len(line_1_list)):
         if i == 0:
             line1.color = 0x673ab7
