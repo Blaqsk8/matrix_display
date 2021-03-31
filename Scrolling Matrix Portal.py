@@ -3,17 +3,23 @@ import random
 import board
 import terminalio
 from adafruit_matrixportal.matrixportal import MatrixPortal
- 
-# --- Display setup ---
-matrixportal = MatrixPortal(status_neopixel=board.NEOPIXEL, debug=True)
 
+# --- User Config --- #
 # Static Display Text
-
 HEADER_TEXT = "Team P NSR"
 FOOTER_TEXT = "More Sale"
 HEADER_LENGTH = len(HEADER_TEXT)*6
 FOOTER_LENGTH = len(FOOTER_TEXT)*6
+
+QUOTES_FEED = "sign-quotes.signtext"
+COLORS_FEED = "sign-quotes.signcolor"
+SCROLL_DELAY = 0.04
+UPDATE_DELAY = 600
+# -------------------------#
  
+# --- Display setup ---
+matrixportal = MatrixPortal(status_neopixel=board.NEOPIXEL, debug=True)
+
 # Create a new label with the color and text selected (ID - 0)
 matrixportal.add_text(
     text_font=terminalio.FONT,
@@ -38,13 +44,7 @@ matrixportal.add_text(
     text_font=terminalio.FONT,
     text_position=((matrixportal.graphics.display.width - FOOTER_LENGTH) // 2, 23),
 )
- 
-QUOTES_FEED = "sign-quotes.signtext"
-COLORS_FEED = "sign-quotes.signcolor"
-SCROLL_DELAY = 0.04
-UPDATE_DELAY = 600
 
- 
 quotes = []
 colors = []
 last_color = None
