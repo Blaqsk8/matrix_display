@@ -7,10 +7,10 @@ from adafruit_matrixportal.matrixportal import MatrixPortal
 # --- User Config --- #
 # Static Display Text
 HEADER_TEXT = "Team P NSR"
-FOOTER_TEXT = "More Sale"
 HEADER_LENGTH = len(HEADER_TEXT)*6
 FOOTER_LENGTH = len(FOOTER_TEXT)*6
 
+SALES_FEED = "sign-quotes.salestext"
 QUOTES_FEED = "sign-quotes.signtext"
 COLORS_FEED = "sign-quotes.signcolor"
 SCROLL_DELAY = 0.04
@@ -45,8 +45,10 @@ matrixportal.add_text(
     text_position=((matrixportal.graphics.display.width - FOOTER_LENGTH) // 2, 23),
 )
 
+sales = []
 quotes = []
 colors = []
+last_sale = None
 last_color = None
 last_quote = None
 
@@ -54,6 +56,16 @@ last_quote = None
 def update_data():
     print("Updating data from Adafruit IO")
     matrixportal.set_text("Connecting", 1)
+    
+    try:
+        sales_data = matrixportal.get_io_data(SALES_FEED)
+        quotes.clear()
+        for json_data in sales_data:
+            quotes.append(matrixportal.network.json_traverse(json_data, ["value"]))
+        print(sales)
+    # pylint: disable=broad-except
+    except Exception as error:
+        print(error)
  
     try:
         quotes_data = matrixportal.get_io_data(QUOTES_FEED)
