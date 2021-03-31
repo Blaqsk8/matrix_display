@@ -42,7 +42,7 @@ matrixportal.add_text(
 # Scrolling Footer Text (ID - 3)
 matrixportal.add_text(
     text_font=terminalio.FONT,
-    text_position=((matrixportal.graphics.display.width - FOOTER_LENGTH) // 2, 23),
+    text_position=((matrixportal.graphics.display.width - FOOTER_LENGTH) // 2, 26),
 )
 
 sales = []
@@ -95,6 +95,7 @@ def update_data():
 update_data()
 last_update = time.monotonic()
 matrixportal.set_text(" ", 1)
+sale_index = None
 quote_index = None
 color_index = None
  
