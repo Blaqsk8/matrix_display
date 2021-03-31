@@ -6,30 +6,50 @@ from adafruit_matrixportal.matrixportal import MatrixPortal
  
 # --- Display setup ---
 matrixportal = MatrixPortal(status_neopixel=board.NEOPIXEL, debug=True)
+
+# Static Display Text
+
+HEADER_TEXT = "Team P NSR"
+FOOTER_TEXT = "More Sale"
+HEADER_LENGTH = len(HEADER_TEXT)*6
+FOOTER_LENGTH = len(FOOTER_TEXT)*6
  
-# Create a new label with the color and text selected
+# Create a new label with the color and text selected (ID - 0)
 matrixportal.add_text(
     text_font=terminalio.FONT,
     text_position=(0, (matrixportal.graphics.display.height // 2) - 1),
     scrolling=True,
 )
  
-# Static 'Connecting' Text
+# Static 'Connecting' Text (ID - 1)
 matrixportal.add_text(
     text_font=terminalio.FONT,
     text_position=(2, (matrixportal.graphics.display.height // 2) - 1),
 )
+
+# Static 'Team P NSR' Heading Text (ID - 2)
+matrixportal.add_text(
+    text_font=terminalio.FONT,
+    text_position=((matrixportal.graphics.display.width - HEADER_LENGTH) // 2, 3),
+)
+
+# Scrolling Footer Text (ID - 3)
+matrixportal.add_text(
+    text_font=terminalio.FONT,
+    text_position=((matrixportal.graphics.display.width - FOOTER_LENGTH) // 2, 23),
+)
  
 QUOTES_FEED = "sign-quotes.signtext"
 COLORS_FEED = "sign-quotes.signcolor"
-SCROLL_DELAY = 0.02
+SCROLL_DELAY = 0.04
 UPDATE_DELAY = 600
+
  
 quotes = []
 colors = []
 last_color = None
 last_quote = None
- 
+
  
 def update_data():
     print("Updating data from Adafruit IO")
@@ -67,6 +87,11 @@ quote_index = None
 color_index = None
  
 while True:
+    # Set the heading text
+    matrixportal.set_text(HEADER_TEXT, 2)
+    
+    # Set the footer text
+    matrixportal.set_text(FOOTER_TEXT, 3)
     # Choose a random quote from quotes
     if len(quotes) > 1 and last_quote is not None:
         while quote_index == last_quote:
