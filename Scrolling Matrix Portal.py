@@ -59,7 +59,7 @@ def update_data():
     
     try:
         sales_data = matrixportal.get_io_data(SALES_FEED)
-        quotes.clear()
+        sales.clear()
         for json_data in sales_data:
             sales.append(matrixportal.network.json_traverse(json_data, ["value"]))
         print(sales)
